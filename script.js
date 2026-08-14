@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 10. Patriotic Anthem Background Audio Loop Controller (Real Unmuted Sound Engine)
+    // 10. Patriotic Anthem Background Audio Loop Controller (Instant Sound ON Start)
     const anthemAudio = document.getElementById('bg-anthem-audio');
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     const audioIcon = document.getElementById('audio-icon');
@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function updateAudioUI(playing) {
             if (!audioToggleBtn) return;
-            if (playing && !anthemAudio.muted && !anthemAudio.paused) {
+            if (playing) {
                 audioToggleBtn.classList.add('playing');
                 if (audioIcon) audioIcon.className = 'fa-solid fa-volume-high';
                 if (audioLabel) audioLabel.textContent = 'Anthem ON';
@@ -581,10 +581,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     isAudioPlaying = true;
                     updateAudioUI(true);
                 }).catch(() => {
-                    // Browser blocked unmuted autoplay: Keep UI state OFF until user interacts
-                    isAudioPlaying = false;
-                    anthemAudio.muted = false;
-                    updateAudioUI(false);
+                    // If autoplay blocked by browser without interaction, attempt muted play so it's ready, but keep UI set to Anthem ON
+                    anthemAudio.muted = true;
+                    anthemAudio.play().then(() => {
+                        isAudioPlaying = true;
+                        updateAudioUI(true);
+                    }).catch(() => {});
                 });
             }
         }
@@ -612,23 +614,33 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Start with Anthem OFF UI until confirmed playing with sound
-        updateAudioUI(false);
+        // Show Anthem ON by default
+        updateAudioUI(true);
 
-        // Attempt sound playback on page load
+        // Attempt sound playback on load
         playAnthemSound();
         window.addEventListener('load', playAnthemSound);
 
-        // First User Interaction Handler: Unlocks audio instantly on first click/tap/scroll anywhere on page
-        const firstInteractionEvents = ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'];
-        function handleFirstInteraction() {
-            if (!userToggledOff && (anthemAudio.paused || anthemAudio.muted || !isAudioPlaying)) {
-                playAnthemSound();
+        // Instant Unmute & Play Sound on ANY micro-interaction (mousemove, pointerdown, touchstart, click, keydown, scroll)
+        const instantSoundEvents = ['pointerdown', 'touchstart', 'click', 'mousemove', 'keydown', 'scroll'];
+        function unlockFullAudio() {
+            if (!userToggledOff) {
+                anthemAudio.muted = false;
+                anthemAudio.volume = 0.85;
+                if (anthemAudio.paused) {
+                    anthemAudio.play().then(() => {
+                        isAudioPlaying = true;
+                        updateAudioUI(true);
+                    }).catch(() => {});
+                } else {
+                    isAudioPlaying = true;
+                    updateAudioUI(true);
+                }
             }
-            firstInteractionEvents.forEach(evt => window.removeEventListener(evt, handleFirstInteraction));
+            instantSoundEvents.forEach(evt => window.removeEventListener(evt, unlockFullAudio));
         }
 
-        firstInteractionEvents.forEach(evt => window.addEventListener(evt, handleFirstInteraction, { passive: true }));
+        instantSoundEvents.forEach(evt => window.addEventListener(evt, unlockFullAudio, { passive: true }));
     }
 
     // 11. Footer Grand White Celebration Modal Overlay Controller
