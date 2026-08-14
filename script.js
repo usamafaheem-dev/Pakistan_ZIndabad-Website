@@ -532,13 +532,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 10. Patriotic Anthem Background Audio Loop Controller (Clean National Anthem Engine)
+    // 10. Patriotic Anthem Background Audio Loop Controller (Clean National Anthem Engine at 1:10)
     const anthemAudio = document.getElementById('bg-anthem-audio');
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     const audioIcon = document.getElementById('audio-icon');
     const audioLabel = document.getElementById('audio-label');
 
-    const START_TIME = 80;  // 1:20 = 80 seconds (Vocal & main anthem start)
+    const START_TIME = 70;  // 1:10 = 70 seconds (Exact vocal start requested by user)
     const END_TIME = 150;   // 2:30 = 150 seconds loop
     let isAudioPlaying = false;
     let userToggledOff = false;
@@ -559,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
         anthemAudio.addEventListener('loadedmetadata', safeSetStartTime);
         anthemAudio.addEventListener('canplay', safeSetStartTime);
 
-        // Auto Loop between 1:20 (80s) and 2:30 (150s)
+        // Auto Loop between 1:10 (70s) and 2:30 (150s)
         anthemAudio.addEventListener('timeupdate', () => {
             if (anthemAudio.currentTime >= END_TIME) {
                 safeSetStartTime();
@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function updateAudioUI(playing) {
             if (!audioToggleBtn) return;
-            if (playing && !anthemAudio.muted) {
+            if (playing) {
                 audioToggleBtn.classList.add('playing');
                 if (audioIcon) audioIcon.className = 'fa-solid fa-volume-high';
                 if (audioLabel) audioLabel.textContent = 'Anthem ON';
@@ -593,9 +593,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     isAudioPlaying = true;
                     updateAudioUI(true);
                 }).catch(() => {
-                    // Autoplay blocked by browser policy without user gesture
+                    // Autoplay blocked on initial load: Keep UI as Anthem ON green active state
                     isAudioPlaying = false;
-                    updateAudioUI(false);
+                    updateAudioUI(true);
                 });
             }
         }
@@ -607,9 +607,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function toggleAnthem() {
-            if (isAudioPlaying && !anthemAudio.paused && !anthemAudio.muted) {
-                userToggledOff = true;
-                pauseAnthem();
+            if (isAudioPlaying || audioToggleBtn.classList.contains('playing')) {
+                if (!anthemAudio.paused && !anthemAudio.muted) {
+                    userToggledOff = true;
+                    pauseAnthem();
+                } else {
+                    userToggledOff = false;
+                    playAnthemSound();
+                }
             } else {
                 userToggledOff = false;
                 playAnthemSound();
@@ -623,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Default UI state
+        // Keep Anthem ON green button state visible by default
         updateAudioUI(true);
 
         // Attempt playback on load
