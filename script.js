@@ -532,27 +532,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 10. Patriotic Anthem Background Audio Loop Controller (Guaranteed Unmuted Sound Engine at 1:20)
+    // 10. Patriotic Anthem Background Audio Loop Controller (Clean National Anthem Engine)
     const anthemAudio = document.getElementById('bg-anthem-audio');
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     const audioIcon = document.getElementById('audio-icon');
     const audioLabel = document.getElementById('audio-label');
 
-    const START_TIME = 80;  // 1:20 = 80 seconds (Where the vocals & loud music starts)
+    const START_TIME = 80;  // 1:20 = 80 seconds (Vocal & main anthem start)
     const END_TIME = 150;   // 2:30 = 150 seconds loop
     let isAudioPlaying = false;
     let userToggledOff = false;
 
     if (anthemAudio) {
         anthemAudio.volume = 0.85;
-        if (anthemAudio.currentTime < START_TIME || anthemAudio.currentTime >= END_TIME) {
-            anthemAudio.currentTime = START_TIME;
+
+        function safeSetStartTime() {
+            try {
+                if (anthemAudio.readyState >= 1 && anthemAudio.duration >= START_TIME) {
+                    if (anthemAudio.currentTime < START_TIME || anthemAudio.currentTime >= END_TIME) {
+                        anthemAudio.currentTime = START_TIME;
+                    }
+                }
+            } catch (err) {}
         }
+
+        anthemAudio.addEventListener('loadedmetadata', safeSetStartTime);
+        anthemAudio.addEventListener('canplay', safeSetStartTime);
 
         // Auto Loop between 1:20 (80s) and 2:30 (150s)
         anthemAudio.addEventListener('timeupdate', () => {
-            if (anthemAudio.currentTime >= END_TIME || anthemAudio.currentTime < START_TIME) {
-                anthemAudio.currentTime = START_TIME;
+            if (anthemAudio.currentTime >= END_TIME) {
+                safeSetStartTime();
             }
         });
 
@@ -572,22 +582,20 @@ document.addEventListener('DOMContentLoaded', () => {
         function playAnthemSound() {
             if (userToggledOff) return;
             anthemAudio.pause();
-            anthemAudio.currentTime = START_TIME;
+            safeSetStartTime();
             anthemAudio.muted = false;
             anthemAudio.volume = 0.85;
 
             const promise = anthemAudio.play();
             if (promise !== undefined) {
                 promise.then(() => {
+                    safeSetStartTime();
                     isAudioPlaying = true;
                     updateAudioUI(true);
                 }).catch(() => {
-                    // If autoplay blocked by browser without interaction, attempt muted play so it's ready
-                    anthemAudio.muted = true;
-                    anthemAudio.play().then(() => {
-                        isAudioPlaying = false;
-                        updateAudioUI(false);
-                    }).catch(() => {});
+                    // Autoplay blocked by browser policy without user gesture
+                    isAudioPlaying = false;
+                    updateAudioUI(false);
                 });
             }
         }
@@ -615,26 +623,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Show Anthem ON by default
+        // Default UI state
         updateAudioUI(true);
 
-        // Attempt sound playback on load
+        // Attempt playback on load
         playAnthemSound();
         window.addEventListener('load', playAnthemSound);
 
-        // Guaranteed Sound Unlock: Fresh unmuted play() at 1:20 (80s) on any user interaction
+        // Guaranteed Sound Unlock on ANY user gesture (click, touch, pointer, scroll, keydown, mousemove)
         const instantSoundEvents = ['pointerdown', 'touchstart', 'click', 'mousemove', 'keydown', 'scroll'];
         function unlockFullAudio() {
             if (!userToggledOff) {
                 anthemAudio.pause();
-                if (anthemAudio.currentTime < START_TIME || anthemAudio.currentTime >= END_TIME) {
-                    anthemAudio.currentTime = START_TIME;
-                }
+                safeSetStartTime();
                 anthemAudio.muted = false;
                 anthemAudio.volume = 0.85;
                 const promise = anthemAudio.play();
                 if (promise !== undefined) {
                     promise.then(() => {
+                        safeSetStartTime();
                         isAudioPlaying = true;
                         updateAudioUI(true);
                     }).catch(() => {});
