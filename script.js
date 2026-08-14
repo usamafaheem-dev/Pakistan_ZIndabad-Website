@@ -532,22 +532,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 10. Patriotic Anthem Background Audio Loop Controller (Instant Sound ON Start)
+    // 10. Patriotic Anthem Background Audio Loop Controller (Guaranteed Unmuted Sound Engine)
     const anthemAudio = document.getElementById('bg-anthem-audio');
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     const audioIcon = document.getElementById('audio-icon');
     const audioLabel = document.getElementById('audio-label');
 
-    const START_TIME = 70;  // 1:10 = 70 seconds
-    const END_TIME = 140;   // 2:20 = 140 seconds
+    const START_TIME = 0;   // Start from 0 seconds (Beginning of patriotic anthem)
+    const END_TIME = 240;   // 4 minutes loop
     let isAudioPlaying = false;
     let userToggledOff = false;
 
     if (anthemAudio) {
-        anthemAudio.currentTime = START_TIME;
         anthemAudio.volume = 0.85;
 
-        // Auto Loop between 70s (1:10) and 140s (2:20)
+        // Auto Loop when audio reaches end time
         anthemAudio.addEventListener('timeupdate', () => {
             if (anthemAudio.currentTime >= END_TIME) {
                 anthemAudio.currentTime = START_TIME;
@@ -556,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function updateAudioUI(playing) {
             if (!audioToggleBtn) return;
-            if (playing) {
+            if (playing && !anthemAudio.muted) {
                 audioToggleBtn.classList.add('playing');
                 if (audioIcon) audioIcon.className = 'fa-solid fa-volume-high';
                 if (audioLabel) audioLabel.textContent = 'Anthem ON';
@@ -569,9 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function playAnthemSound() {
             if (userToggledOff) return;
-            if (anthemAudio.currentTime < START_TIME || anthemAudio.currentTime >= END_TIME) {
-                anthemAudio.currentTime = START_TIME;
-            }
+            anthemAudio.pause();
             anthemAudio.muted = false;
             anthemAudio.volume = 0.85;
 
@@ -581,11 +578,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     isAudioPlaying = true;
                     updateAudioUI(true);
                 }).catch(() => {
-                    // If autoplay blocked by browser without interaction, attempt muted play so it's ready, but keep UI set to Anthem ON
+                    // If autoplay blocked by browser without interaction, attempt muted play so it's ready
                     anthemAudio.muted = true;
                     anthemAudio.play().then(() => {
-                        isAudioPlaying = true;
-                        updateAudioUI(true);
+                        isAudioPlaying = false;
+                        updateAudioUI(false);
                     }).catch(() => {});
                 });
             }
@@ -621,20 +618,19 @@ document.addEventListener('DOMContentLoaded', () => {
         playAnthemSound();
         window.addEventListener('load', playAnthemSound);
 
-        // Instant Unmute & Play Sound on ANY micro-interaction (mousemove, pointerdown, touchstart, click, keydown, scroll)
+        // Guaranteed Sound Unlock: Fresh unmuted play() on any user interaction (click, touch, pointer, scroll, keydown, mousemove)
         const instantSoundEvents = ['pointerdown', 'touchstart', 'click', 'mousemove', 'keydown', 'scroll'];
         function unlockFullAudio() {
             if (!userToggledOff) {
+                anthemAudio.pause();
                 anthemAudio.muted = false;
                 anthemAudio.volume = 0.85;
-                if (anthemAudio.paused) {
-                    anthemAudio.play().then(() => {
+                const promise = anthemAudio.play();
+                if (promise !== undefined) {
+                    promise.then(() => {
                         isAudioPlaying = true;
                         updateAudioUI(true);
                     }).catch(() => {});
-                } else {
-                    isAudioPlaying = true;
-                    updateAudioUI(true);
                 }
             }
             instantSoundEvents.forEach(evt => window.removeEventListener(evt, unlockFullAudio));
