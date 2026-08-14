@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dismissIntro = () => {
             introLoader.classList.add('fade-out');
             document.body.classList.remove('intro-active');
+            if (audioToggleBtn) audioToggleBtn.click();
             setTimeout(() => {
                 introLoader.style.display = 'none';
             }, 900);
@@ -623,11 +624,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // Keep Anthem ON green button state visible by default
         updateAudioUI(true);
 
-        // Attempt playback on load
-        playAnthemSound();
-        window.addEventListener('load', playAnthemSound);
+        // Auto trigger button click programmatically on page load
+        function triggerAutoButtonClick() {
+            if (audioToggleBtn && !userToggledOff) {
+                audioToggleBtn.click();
+            }
+        }
 
-        // Guaranteed Sound Unlock on ANY user gesture (click, touch, pointer, scroll, keydown, mousemove)
+        playAnthemSound();
+        window.addEventListener('load', () => {
+            playAnthemSound();
+            setTimeout(triggerAutoButtonClick, 200);
+            setTimeout(triggerAutoButtonClick, 1000);
+        });
+
+        // Auto trigger button click on ANY user screen gesture (click, touch, pointer, scroll, keydown, mousemove)
         const instantSoundEvents = ['pointerdown', 'touchstart', 'click', 'mousemove', 'keydown', 'scroll'];
         function unlockFullAudio() {
             if (!userToggledOff) {
@@ -638,7 +649,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     promise.then(() => {
                         isAudioPlaying = true;
                         updateAudioUI(true);
-                    }).catch(() => {});
+                    }).catch(() => {
+                        triggerAutoButtonClick();
+                    });
+                } else {
+                    triggerAutoButtonClick();
                 }
             }
             instantSoundEvents.forEach(evt => window.removeEventListener(evt, unlockFullAudio));
