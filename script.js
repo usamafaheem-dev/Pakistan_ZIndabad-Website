@@ -532,23 +532,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 10. Patriotic Anthem Background Audio Loop Controller (Guaranteed Unmuted Sound Engine)
+    // 10. Patriotic Anthem Background Audio Loop Controller (Guaranteed Unmuted Sound Engine at 1:20)
     const anthemAudio = document.getElementById('bg-anthem-audio');
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     const audioIcon = document.getElementById('audio-icon');
     const audioLabel = document.getElementById('audio-label');
 
-    const START_TIME = 0;   // Start from 0 seconds (Beginning of patriotic anthem)
-    const END_TIME = 240;   // 4 minutes loop
+    const START_TIME = 80;  // 1:20 = 80 seconds (Where the vocals & loud music starts)
+    const END_TIME = 150;   // 2:30 = 150 seconds loop
     let isAudioPlaying = false;
     let userToggledOff = false;
 
     if (anthemAudio) {
         anthemAudio.volume = 0.85;
+        if (anthemAudio.currentTime < START_TIME || anthemAudio.currentTime >= END_TIME) {
+            anthemAudio.currentTime = START_TIME;
+        }
 
-        // Auto Loop when audio reaches end time
+        // Auto Loop between 1:20 (80s) and 2:30 (150s)
         anthemAudio.addEventListener('timeupdate', () => {
-            if (anthemAudio.currentTime >= END_TIME) {
+            if (anthemAudio.currentTime >= END_TIME || anthemAudio.currentTime < START_TIME) {
                 anthemAudio.currentTime = START_TIME;
             }
         });
@@ -569,6 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function playAnthemSound() {
             if (userToggledOff) return;
             anthemAudio.pause();
+            anthemAudio.currentTime = START_TIME;
             anthemAudio.muted = false;
             anthemAudio.volume = 0.85;
 
@@ -618,11 +622,14 @@ document.addEventListener('DOMContentLoaded', () => {
         playAnthemSound();
         window.addEventListener('load', playAnthemSound);
 
-        // Guaranteed Sound Unlock: Fresh unmuted play() on any user interaction (click, touch, pointer, scroll, keydown, mousemove)
+        // Guaranteed Sound Unlock: Fresh unmuted play() at 1:20 (80s) on any user interaction
         const instantSoundEvents = ['pointerdown', 'touchstart', 'click', 'mousemove', 'keydown', 'scroll'];
         function unlockFullAudio() {
             if (!userToggledOff) {
                 anthemAudio.pause();
+                if (anthemAudio.currentTime < START_TIME || anthemAudio.currentTime >= END_TIME) {
+                    anthemAudio.currentTime = START_TIME;
+                }
                 anthemAudio.muted = false;
                 anthemAudio.volume = 0.85;
                 const promise = anthemAudio.play();
