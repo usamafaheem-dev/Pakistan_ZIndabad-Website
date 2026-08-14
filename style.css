@@ -4383,3 +4383,22 @@ video {
     margin-bottom: 15px !important;
   }
 }
+
+/* ==========================================================================
+   HIGH-PERFORMANCE PRODUCTION & RENDERING OPTIMIZATIONS
+   ========================================================================== */
+.landmarks-section,
+.upcoming-event-main-div,
+.forces-section,
+.provincial-showcase-section,
+.gallery-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+.landmarks-coverflow-track,
+.hero-marquee-track,
+.hero-capsules-container {
+  will-change: transform;
+  transform: translateZ(0);
+}

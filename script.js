@@ -737,4 +737,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // 13. High-Performance IntersectionObserver Video Lazy-Loader
+    const lazyVideos = document.querySelectorAll('video[data-src]');
+    if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    if (video.dataset.src) {
+                        video.src = video.dataset.src;
+                        video.removeAttribute('data-src');
+                        video.play().catch(() => {});
+                    }
+                    observer.unobserve(video);
+                }
+            });
+        }, { rootMargin: '200px 0px' });
+
+        lazyVideos.forEach(video => videoObserver.observe(video));
+    } else {
+        lazyVideos.forEach(video => {
+            if (video.dataset.src) {
+                video.src = video.dataset.src;
+                video.play().catch(() => {});
+            }
+        });
+    }
 });
