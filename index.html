@@ -4,252 +4,786 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Independence Day | Pakistan</title>
+    <meta name="description" content="Official Flagship 79th Independence Day Tribute Portal (14 August 2026) — Interactive Flag Hoisting, Landmarks Explorer, Patriotic Quiz & Card Generator.">
+    <title>Pakistan 79th Independence Day | Flagship Tribute 2026</title>
     <link rel="shortcut icon" href="./assests/flag.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playwrite+MX+Guides&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+QLD:wght@100..400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Playwrite+AU+QLD:wght@100..400&family=Playwrite+MX+Guides&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="style.css">
- 
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
-        <!-- header start -->
-               <header id="header">
+    <!-- Grand Cinematic Splash Intro Screen -->
+    <div id="intro-loader" class="intro-loader">
+        <video id="intro-loader-video" class="intro-loader-video" src="./assests/videoplayback.mp4" autoplay muted playsinline></video>
+        <div class="intro-loader-overlay"></div>
+        <canvas id="intro-fireworks-canvas" class="intro-fireworks-canvas"></canvas>
+        
+        <button id="skip-intro-btn" class="skip-intro-btn">
+            Skip Intro <i class="fa-solid fa-forward-step"></i>
+        </button>
+
+        <div class="intro-content">
+            <div class="intro-emblem">
+                <i class="fa-solid fa-star-and-crescent"></i>
+            </div>
+            <h1 class="main-intro-title">PAKISTAN ZINDABAD</h1>
+            <p class="intro-subtitle">79th Independence Anniversary Tribute (1947 – 2026)</p>
+            <div class="intro-progress-bar">
+                <div id="intro-progress-fill" class="intro-progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Scroll Progress Indicator -->
+    <div id="scroll-progress" class="scroll-progress-bar"></div>
+
+    <!-- Fireworks & Confetti Canvas Overlay -->
+    <canvas id="fireworks-canvas" class="fireworks-canvas"></canvas>
+
+    <!-- Header Start -->
+    <header id="header">
         <nav>
             <div class="navbar">
                 <div class="logo-container">
-                    <img src="./assests/flag.png" alt="Logo" class="logo-img">
-                    <span class="font-change">Pakistan Zindabad</span>
-                 
+                    <img src="./assests/flag.png" alt="Logo" class="logo-img" decoding="async" loading="lazy">
+                    <div class="logo-text-wrapper">
+                        <span class="font-change">Pakistan Zindabad</span>
+                        <span class="header-tag">Flagship Tribute 2026</span>
+                    </div>
                 </div>
-                
-             
-                
-                <ul class="nav-link">
-                    <li><a href="#header">Home</a></li>
-                    <li><a href="#history">History</a></li>
-                    <li><a href="#Events">Events</a></li>
-                    <li><a href="#Moments">Gallery</a></li>
-                    <li><a href="#Military">Military</a></li>
+
+                <div class="nav-right-controls">
+                    <button id="audio-toggle-btn" class="audio-toggle-btn" title="Toggle Patriotic Anthem Music">
+                        <i class="fa-solid fa-volume-high" id="audio-icon"></i>
+                        <span class="audio-wave">
+                            <span></span><span></span><span></span>
+                        </span>
+                        <span class="audio-label" id="audio-label">Anthem ON</span>
+                    </button>
+
+                    <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+                <ul class="nav-link" id="nav-menu">
+                    <li><a href="#header"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="#ceremony"><i class="fa-solid fa-flag"></i> Hoisting</a></li>
+                    <li><a href="#Heroes"><i class="fa-solid fa-crown"></i> Heroes</a></li>
+                    <li><a href="#landmarks"><i class="fa-solid fa-monument"></i> Landmarks</a></li>
+                    <li><a href="#Moments"><i class="fa-solid fa-images"></i> Gallery</a></li>
+                    <li><a href="#ApsTribute"><i class="fa-solid fa-candle-holder"></i> APS Tribute</a></li>
+                    <li><a href="#Events"><i class="fa-solid fa-calendar-star"></i> Events</a></li>
+                    <li><a href="#Military"><i class="fa-solid fa-shield-halved"></i> Military</a></li>
                 </ul>
             </div>
         </nav>
     </header>
-    <!-- header end -->
-    <!-- hero section start -->
-     <main>
+
+    <!-- Background Patriotic Anthem Audio Element -->
+    <audio id="bg-anthem-audio" autoplay loop preload="auto" playsinline>
+        <source src="./assests/Ay Watan Pyaray Watan _ 23rd March - The Gathering of Legends.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Header End -->
+
+    <!-- Hero Section Start -->
+    <main>
         <div class="hero-section">
-            <video class="hero" src="./assests/videoplayback.mp4" autoplay muted loop playsinline preload="metadata"
-                loading="lazy"></video>
+            <video class="hero" src="./assests/videoplayback.mp4" autoplay muted loop playsinline preload="metadata"></video>
             <div class="overlay"></div>
-            <div class="hero-text">
-                <h1 class="hero-text-heading">
-                    Proudly Pakistan
-                </h1>
-                <p class="hero-text-text">Embracing unity, heritage, and progress — building a brighter tomorrow
-                    together.</p>
-                <button class="herobtn">
-                    <span class="change1">Pakistan</span>
-                    <span class="change2">Zinda Bad</span>
 
-                </button>
-                <div class="features">
-                    <div class="features-video-one">
-                        <video src="./assests/videoplayback.mp4" autoplay muted loop playsinline preload="metadata"
-                            loading="lazy"></video>
+            <div class="hero-container">
+                <!-- Left Content: Text & Badges -->
+                <div class="hero-left-content">
+                    <div class="hero-badge"><i class="fa-solid fa-star-and-crescent"></i> 79th Independence Anniversary (1947 – 2026)</div>
+                    <h1 class="hero-text-heading">Proudly Pakistan 2026</h1>
+                    <p class="hero-text-text">Celebrating 79 Years of Resilience, Unity & Freedom. Honoring Quaid-e-Azam, Fatima Jinnah, Allama Iqbal & Our Brave National Heroes.</p>
 
+                    <div class="hero-action-group">
+                        <button class="herobtn" onclick="document.getElementById('ceremony').scrollIntoView({behavior:'smooth'})">
+                            <span class="change1">Explore Heritage</span>
+                            <span class="change2">& Verses 🤲</span>
+                        </button>
                     </div>
-                    <div class="features-video-two">
-                        <video src="./assests/128740-742053572.mp4" autoplay muted loop playsinline preload="metadata"
-                            loading="lazy"></video>
 
+                    <div class="features">
+                        <div class="features-video-one" title="Parade Highlights">
+                            <video data-src="./assests/videoplayback.mp4" autoplay muted loop playsinline preload="none"></video>
+                        </div>
+                        <div class="features-video-two" title="Cultural Heritage">
+                            <video data-src="./assests/128740-742053572.mp4" autoplay muted loop playsinline preload="none"></video>
+                        </div>
+                        <div class="features-video-three" title="Celebratory Fireworks">
+                            <video data-src="./assests/133073-755697239.mp4" autoplay muted loop playsinline preload="none"></video>
+                        </div>
                     </div>
-                    <div class="features-video-three">
-                        <video src="./assests/133073-755697239.mp4" autoplay muted loop playsinline preload="metadata"
-                            loading="lazy"></video>
+                </div>
 
+                <!-- Right Content: Staggered Infinite Vertical Carousel Pillars (Matches User Guidance) -->
+                <div class="hero-capsules-container">
+                    <!-- Column 1 (Left Side - Offset UP - Auto Scrolls UP) -->
+                    <div class="capsule-column side-capsule-col col-stagger-up">
+                        <div class="capsule-track-up">
+                            <!-- Items Set 1 -->
+                            <div class="capsule-card gold-border">
+                                <img src="./assests/jinnah.jpg" alt="Quaid-e-Azam Muhammad Ali Jinnah" loading="lazy" decoding="async">
+                                <div class="capsule-title">Ali Jinnah</div>
+                            </div>
+                            <div class="capsule-card orange-border">
+                                <img src="./assests/image1.jpg" alt="Mazar-e-Quaid" loading="lazy" decoding="async">
+                                <div class="capsule-title">Mazar-e-Quaid</div>
+                            </div>
+                            <div class="capsule-card red-border">
+                                <img src="./assests/images16.jpg" alt="Nishan-e-Haider Martyrs" loading="lazy" decoding="async">
+                                <div class="capsule-title">Raja Aziz Bhatti</div>
+                            </div>
+                            <div class="capsule-card blue-border">
+                                <img src="./assests/images20.jpg" alt="Pak Navy & Air Force" loading="lazy" decoding="async">
+                                <div class="capsule-title">PAF Falcons</div>
+                            </div>
+
+                            <!-- Duplicate Set for Seamless Loop -->
+                            <div class="capsule-card gold-border">
+                                <img src="./assests/jinnah.jpg" alt="Quaid-e-Azam Muhammad Ali Jinnah" loading="lazy" decoding="async">
+                                <div class="capsule-title">Ali Jinnah</div>
+                            </div>
+                            <div class="capsule-card orange-border">
+                                <img src="./assests/image1.jpg" alt="Mazar-e-Quaid" loading="lazy" decoding="async">
+                                <div class="capsule-title">Mazar-e-Quaid</div>
+                            </div>
+                            <div class="capsule-card red-border">
+                                <img src="./assests/images16.jpg" alt="Nishan-e-Haider Martyrs" loading="lazy" decoding="async">
+                                <div class="capsule-title">Raja Aziz Bhatti</div>
+                            </div>
+                            <div class="capsule-card blue-border">
+                                <img src="./assests/images20.jpg" alt="Pak Navy & Air Force" loading="lazy" decoding="async">
+                                <div class="capsule-title">PAF Falcons</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 (Center Hero Pillar - Taller Capsules - Offset DOWN - Auto Scrolls DOWN) -->
+                    <div class="capsule-column center-capsule-col col-stagger-down">
+                        <div class="capsule-track-down">
+                            <!-- Items Set 1 -->
+                            <div class="capsule-card green-border">
+                                <img src="./assests/Muhammad_Iqbal_in_1931.jpg" alt="Allama Muhammad Iqbal" loading="lazy" decoding="async">
+                                <div class="capsule-title">Allama Iqbal</div>
+                            </div>
+                            <div class="capsule-card emerald-border">
+                                <img src="./assests/image8.jpg" alt="Minar-e-Pakistan" loading="lazy" decoding="async">
+                                <div class="capsule-title">Minar-e-Pakistan</div>
+                            </div>
+                            <div class="capsule-card gold-border">
+                                <img src="./assests/image2.jpg" alt="Badshahi Mosque" loading="lazy" decoding="async">
+                                <div class="capsule-title">Badshahi Mosque</div>
+                            </div>
+                            <div class="capsule-card cyan-border">
+                                <img src="./assests/image3.jpg" alt="K2 Peak & Karakoram" loading="lazy" decoding="async">
+                                <div class="capsule-title">K2 Mountain</div>
+                            </div>
+
+                            <!-- Duplicate Set for Seamless Loop -->
+                            <div class="capsule-card green-border">
+                                <img src="./assests/Muhammad_Iqbal_in_1931.jpg" alt="Allama Muhammad Iqbal" loading="lazy" decoding="async">
+                                <div class="capsule-title">Allama Iqbal</div>
+                            </div>
+                            <div class="capsule-card emerald-border">
+                                <img src="./assests/image8.jpg" alt="Minar-e-Pakistan" loading="lazy" decoding="async">
+                                <div class="capsule-title">Minar-e-Pakistan</div>
+                            </div>
+                            <div class="capsule-card gold-border">
+                                <img src="./assests/image2.jpg" alt="Badshahi Mosque" loading="lazy" decoding="async">
+                                <div class="capsule-title">Badshahi Mosque</div>
+                            </div>
+                            <div class="capsule-card cyan-border">
+                                <img src="./assests/image3.jpg" alt="K2 Peak & Karakoram" loading="lazy" decoding="async">
+                                <div class="capsule-title">K2 Mountain</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3 (Right Side - Offset UP - Auto Scrolls UP) -->
+                    <div class="capsule-column side-capsule-col col-stagger-up">
+                        <div class="capsule-track-up">
+                            <!-- Items Set 1 -->
+                            <div class="capsule-card purple-border">
+                                <img src="./assests/Fatima_jinnah1 (3).jpg" alt="Mohtarma Fatima Jinnah" loading="lazy" decoding="async">
+                                <div class="capsule-title">Fatima Jinnah</div>
+                            </div>
+                            <div class="capsule-card cyan-border">
+                                <img src="./assests/images18.jpg" alt="Armed Forces Tribute" loading="lazy" decoding="async">
+                                <div class="capsule-title">Armed Forces</div>
+                            </div>
+                            <div class="capsule-card lime-border">
+                                <img src="./assests/image4.jpg" alt="Faisal Mosque Islamabad" loading="lazy" decoding="async">
+                                <div class="capsule-title">Faisal Mosque</div>
+                            </div>
+                            <div class="capsule-card amber-border">
+                                <img src="./assests/images14.webp" alt="Hunza & Northern Areas" loading="lazy" decoding="async">
+                                <div class="capsule-title">Hunza Valley</div>
+                            </div>
+
+                            <!-- Duplicate Set for Seamless Loop -->
+                            <div class="capsule-card purple-border">
+                                <img src="./assests/Fatima_jinnah1 (3).jpg" alt="Mohtarma Fatima Jinnah" loading="lazy" decoding="async">
+                                <div class="capsule-title">Fatima Jinnah</div>
+                            </div>
+                            <div class="capsule-card cyan-border">
+                                <img src="./assests/images18.jpg" alt="Armed Forces Tribute" loading="lazy" decoding="async">
+                                <div class="capsule-title">Armed Forces</div>
+                            </div>
+                            <div class="capsule-card lime-border">
+                                <img src="./assests/image4.jpg" alt="Faisal Mosque Islamabad" loading="lazy" decoding="async">
+                                <div class="capsule-title">Faisal Mosque</div>
+                            </div>
+                            <div class="capsule-card amber-border">
+                                <img src="./assests/images14.webp" alt="Hunza & Northern Areas" loading="lazy" decoding="async">
+                                <div class="capsule-title">Hunza Valley</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="leader ">
-
-
-                <div>
-                    <img class="leader-image" src="./assests/jinnah.jpg" alt="" loading="lazy">
-                    <h4 class="leader-heading">Ali Jinnah</h4>
-
-                </div>
-
-                <div>
-                    <img class="leader-image-two    " src="./assests/Fatima_jinnah1 (3).jpg" alt="" loading="lazy">
-                    <h4 class="leader-heading">Fatima Jinnah</h4>
-                </div>
-
-                <div>
-
-                    <img class="leader-image" src="./assests/Muhammad_Iqbal_in_1931.jpg" alt="" loading="lazy">
-                    <h4 class="leader-heading">Allama Iqbal</h4>
-                </div>
-
-
-
             </div>
         </div>
     </main>
-    <!-- hero section end -->
+    <!-- Hero Section End -->
 
-    <!-- Histroy section start-->
-
-   <section class="history" id="history">
-  <div class="headinghisdiv">
-    <h1 class="pakheading" id="historyheading">History Of Pakistan</h1>
-  </div>
-  
-  <div class="history-container">
-    <!-- First Row (2 cards) -->
-    <div class="history-row">
-      <div class="history-card">
-        <div class="card-content">
-          <h1 id="his-heading">Pre-Independence Era</h1>
-          <p>"Before the birth of Pakistan, Muslims in the Indian subcontinent struggled for their identity, rights, and freedom. Guided by leaders like Allama Iqbal and Quaid-e-Azam, the Two-Nation Theory became the foundation for a separate homeland."</p>
-        </div>
-        <div class="card-media">
-          <video src="./assests/videoplayback (5).mp4" autoplay muted loop playsinline preload="metadata" loading="lazy"></video>
-        </div>
-      </div>
-      
-      <div class="history-card">
-        <div class="card-content">
-          <h1 id="his-heading">Independence (1947)</h1>
-          <p>"On 14 August 1947, Pakistan emerged as an independent nation after decades of struggle. Millions migrated to the new country, facing hardships but holding onto hope for a better future."</p>
-        </div>
-        <div class="card-media">
-          <video src="./assests/videoplayback (6).mp4" autoplay muted loop playsinline preload="metadata" loading="lazy"></video>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Second Row (1 card) -->
-    <div class="history-row">
-      <div class="history-card single-card">
-        <div class="card-content">
-          <h1 id="his-heading1">Early Years of Pakistan</h1>
-          <p id="his-paragraph1">"In its early years, Pakistan worked hard to build its institutions, economy, and unity. Despite challenges, the spirit of sacrifice and patriotism shaped the nation's foundation."</p>
-        </div>
-        <div class="card-media">
-          <video src="./assests/videoplayback (7).mp4" autoplay muted loop playsinline preload="metadata" loading="lazy"></video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-    <!-- Histroy section  end-->
-
-
-
-    <!--start upcomig event section -->
-    <section>
-        <div>
-            <div class="event-div" id="Events">
-                <h1>Some Upcoming Event</h1>
-                <div class="inside-event-div">
-
-
-                    <div class="event-div-first">
-
-                        <h5>Youm-e-Tashakur </h5>
-                        <h5>16 May 2025</h5>
-                        <div>
-                            <video class="hero" src="./assests/videoplayback (1).mp4" autoplay muted loop playsinline
-                                preload="metadata" loading="lazy"></video>
-                        </div>
-                        <p>Ye ek newly declared national observance hai, jo annual taur par manaya jayega, jahan desh
-                            armed
-                            forces ki performance aur unity ka shukr ada karega.
-                        </p>
-
-                    </div>
-                    <div class="event-div-first">
-
-                        <h5>Independence Day</h5>
-                        <h5>14 August 2025</h5>
-                        <div>
-                            <video class="hero" src="./assests/videoplayback.mp4" autoplay muted loop playsinline
-                                preload="metadata" loading="lazy"></video>
-
-                        </div>
-                        <p>Pakistan ki azaadi ka tyohaar har saal bade jazbe se manaya jata hai — flags, parades, aur
-                            patriotic songs ke saath.
-                        </p>
-
-                    </div>
-                    <div class="event-div-first">
-
-                        <h5>Defence Day</h5>
-                        <h5>6 September 2025</h5>
-                        <div>
-                            <video class="hero" src="./assests/videoplayback (2).mp4" autoplay muted loop playsinline
-                                preload="metadata" loading="lazy"></video>
-
-                        </div>
-                        <p>Armed forces ki 1965 ki bahaduri ko yaad karne ke liye special ceremonies aur memorial
-                            tributes hote hain.
-                        </p>
-
-                    </div>
-                    <div class="event-div-first" id="quiad-div">
-
-                        <h5>Birth of Jinnah </h5>
-                        <h5>25 December 2025</h5>
-                        <div>
-                            <video src="./assests/videoplayback (4).mp4" autoplay muted loop playsinline
-                                preload="metadata" loading="lazy"></video>
-                        </div>
-                        <p>Founder of Pakistan, Quaid-e-Azam Muhammad Ali Jinnah ki Padish ke din unki legacy aur
-                            leadership ko yaad kiya jata hai.
-                        </p>
-
-                    </div>
-
-
-
+    <!-- Forces Flag Horizontal Marquee Ribbon Start -->
+    <div class="forces-marquee-ribbon" id="ForcesRibbon">
+        <div class="marquee-track">
+            <!-- Set 1 -->
+            <div class="marquee-item gold-glow">
+                <img src="./assests/flag.png" alt="Pakistan National Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Sabz Hilali Parcham</span>
+                    <span class="flag-sub">Islamic Republic of Pakistan</span>
                 </div>
-
-
+            </div>
+            <div class="marquee-item emerald-glow">
+                <img src="./assests/flag_pak_army.png" alt="Pakistan Army Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Pakistan Army</span>
+                    <span class="flag-sub">Faith, Unity, Discipline</span>
+                </div>
+            </div>
+            <div class="marquee-item cyan-glow">
+                <img src="./assests/flag_pak_airforce.png" alt="Pakistan Air Force Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Pakistan Air Force</span>
+                    <span class="flag-sub">Second to None</span>
+                </div>
+            </div>
+            <div class="marquee-item purple-glow">
+                <img src="./assests/flag_pak_navy.png" alt="Pakistan Navy Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Pakistan Navy</span>
+                    <span class="flag-sub">Guardians of Sea Borders</span>
+                </div>
+            </div>
+            <div class="marquee-item amber-glow">
+                <img src="./assests/flag_pak_ssg.png" alt="SSG Commandos" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">SSG Commandos</span>
+                    <span class="flag-sub">Man Janbazam (Silent Warriors)</span>
+                </div>
             </div>
 
+            <!-- Set 2 (Duplicate for Seamless Loop) -->
+            <div class="marquee-item gold-glow">
+                <img src="./assests/flag.png" alt="Pakistan National Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Sabz Hilali Parcham</span>
+                    <span class="flag-sub">Islamic Republic of Pakistan</span>
+                </div>
+            </div>
+            <div class="marquee-item emerald-glow">
+                <img src="./assests/flag_pak_army.png" alt="Pakistan Army Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Pakistan Army</span>
+                    <span class="flag-sub">Faith, Unity, Discipline</span>
+                </div>
+            </div>
+            <div class="marquee-item cyan-glow">
+                <img src="./assests/flag_pak_airforce.png" alt="Pakistan Air Force Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Pakistan Air Force</span>
+                    <span class="flag-sub">Second to None</span>
+                </div>
+            </div>
+            <div class="marquee-item purple-glow">
+                <img src="./assests/flag_pak_navy.png" alt="Pakistan Navy Flag" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">Pakistan Navy</span>
+                    <span class="flag-sub">Guardians of Sea Borders</span>
+                </div>
+            </div>
+            <div class="marquee-item amber-glow">
+                <img src="./assests/flag_pak_ssg.png" alt="SSG Commandos" loading="lazy" decoding="async">
+                <div class="item-text">
+                    <span class="flag-title">SSG Commandos</span>
+                    <span class="flag-sub">Man Janbazam (Silent Warriors)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Forces Flag Horizontal Marquee Ribbon End -->
+
+    <!-- VIP National Heroes & Founders Section Start -->
+    <section class="heroes-vip-section" id="Heroes">
+        <div class="heroes-vip-container">
+            <span class="section-tag">Legacy of Greatness</span>
+            <h2 class="flagship-title">🏛️ Architects of Freedom & National Heroes</h2>
+            <p class="flagship-subtitle">Honoring the visionary founders, philosophers, and brave defenders whose courage shaped the destiny of Pakistan.</p>
+
+            <div class="heroes-pillars-grid">
+                <!-- Pillar 1: Quaid-e-Azam -->
+                <div class="hero-pillar-card gold-pillar">
+                    <div class="pillar-top-content">
+                        <span class="hero-role-badge badge-gold"><i class="fa-solid fa-crown"></i> Father of Nation</span>
+                        <h3 class="hero-name">Quaid-e-Azam</h3>
+                        <h4 class="hero-full-title">Muhammad Ali Jinnah</h4>
+                        <div class="hero-divider"></div>
+                        <p class="hero-quote">"Unity, Faith, and Discipline. With faith and devotion to duty, nothing is impossible."</p>
+                    </div>
+                    <div class="pillar-img-wrapper">
+                        <img src="./assests/quaid_jinnah.jpg" alt="Quaid-e-Azam Muhammad Ali Jinnah" loading="lazy" decoding="async">
+                        <div class="img-overlay-gradient"></div>
+                    </div>
+                </div>
+
+                <!-- Pillar 2: Fatima Jinnah -->
+                <div class="hero-pillar-card emerald-pillar">
+                    <div class="pillar-top-content">
+                        <span class="hero-role-badge badge-emerald"><i class="fa-solid fa-hand-holding-heart"></i> Mother of Nation</span>
+                        <h3 class="hero-name">Mohtarma Fatima</h3>
+                        <h4 class="hero-full-title">Jinnah (Madr-e-Millat)</h4>
+                        <div class="hero-divider"></div>
+                        <p class="hero-quote">"Women play a paramount role in building the nation. Stand united and work tirelessly."</p>
+                    </div>
+                    <div class="pillar-img-wrapper">
+                        <img src="./assests/fatima_jinnah.jpg" alt="Mohtarma Fatima Jinnah" loading="lazy" decoding="async">
+                        <div class="img-overlay-gradient"></div>
+                    </div>
+                </div>
+
+                <!-- Pillar 3: Allama Iqbal -->
+                <div class="hero-pillar-card cyan-pillar">
+                    <div class="pillar-top-content">
+                        <span class="hero-role-badge badge-cyan"><i class="fa-solid fa-feather-pointed"></i> Poet of the East</span>
+                        <h3 class="hero-name">Allama Iqbal</h3>
+                        <h4 class="hero-full-title">Mufakkir-e-Pakistan</h4>
+                        <div class="hero-divider"></div>
+                        <p class="hero-quote">"The dream of a sovereign Muslim homeland became the eternal reality of Pakistan."</p>
+                    </div>
+                    <div class="pillar-img-wrapper">
+                        <img src="./assests/allama_iqbal.jpg" alt="Allama Muhammad Iqbal" loading="lazy" decoding="async">
+                        <div class="img-overlay-gradient"></div>
+                    </div>
+                </div>
+
+                <!-- Pillar 4: Liaquat Ali Khan -->
+                <div class="hero-pillar-card purple-pillar">
+                    <div class="pillar-top-content">
+                        <span class="hero-role-badge badge-purple"><i class="fa-solid fa-landmark-flag"></i> Prime Minister</span>
+                        <h3 class="hero-name">Liaquat Ali</h3>
+                        <h4 class="hero-full-title">Khan (Quaid-i-Millat)</h4>
+                        <div class="hero-divider"></div>
+                        <p class="hero-quote">"Pakistan was born of historic necessity. We will defend our sacred soil to our last breath."</p>
+                    </div>
+                    <div class="pillar-img-wrapper">
+                        <img src="./assests/liaquat_ali_khan.jpg" alt="Liaquat Ali Khan" loading="lazy" decoding="async">
+                        <div class="img-overlay-gradient"></div>
+                    </div>
+                </div>
+
+                <!-- Pillar 5: Major Aziz Bhatti -->
+                <div class="hero-pillar-card amber-pillar">
+                    <div class="pillar-top-content">
+                        <span class="hero-role-badge badge-amber"><i class="fa-solid fa-medal"></i> Nishan-e-Haider</span>
+                        <h3 class="hero-name">Major Aziz</h3>
+                        <h4 class="hero-full-title">Bhatti (1965 Hero)</h4>
+                        <div class="hero-divider"></div>
+                        <p class="hero-quote">"Do not recall me from the front line. I will fight till the last drop of my blood."</p>
+                    </div>
+                    <div class="pillar-img-wrapper">
+                        <img src="./assests/major_aziz_bhatti.jpg" alt="Major Raja Aziz Bhatti Shaheed" loading="lazy" decoding="async">
+                        <div class="img-overlay-gradient"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    <!-- end upcoming event section -->
-    <!-- line scrolling start -->
-    <section>
+    <!-- VIP National Heroes & Founders Section End -->
 
-        <div class="scroll-text">
-            <h1>Pakistan – A land of dreams, sacrifices, and endless possibilities. United we stand, proud we shine,
-                forever
-                free and strong!</h1>
+    <!-- National Slogans & Freedom Quotes Gold Marquee Ribbon Start -->
+    <div class="slogans-marquee-ribbon" id="SlogansRibbon">
+        <div class="marquee-track-right">
+            <!-- Set 1 -->
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🇵🇰</span>
+                <span class="slogan-text urdu">پاکستان زندہ باد</span>
+                <span class="slogan-en">Pakistan Zindabad!</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🦅</span>
+                <span class="slogan-text urdu">اتحاد، ایمان، نظم</span>
+                <span class="slogan-en">Unity, Faith, Discipline</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">💚</span>
+                <span class="slogan-text urdu">دل دل پاکستان، جاں جاں پاکستان</span>
+                <span class="slogan-en">Dil Dil Pakistan!</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🌙</span>
+                <span class="slogan-text urdu">سبز ہلالی پرچم کی شان</span>
+                <span class="slogan-en">Glory of Green & White Flag</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🛡️</span>
+                <span class="slogan-text urdu">ہم زندہ قوم ہیں، پائندہ قوم ہیں</span>
+                <span class="slogan-en">A Sovereign Resilient Nation</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">⭐</span>
+                <span class="slogan-text urdu">قائد کا پاکستان، اقبال کا خواب</span>
+                <span class="slogan-en">Quaid's Nation & Iqbal's Dream</span>
+            </div>
+
+            <!-- Set 2 (Duplicate for Seamless Loop) -->
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🇵🇰</span>
+                <span class="slogan-text urdu">پاکستان زندہ باد</span>
+                <span class="slogan-en">Pakistan Zindabad!</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🦅</span>
+                <span class="slogan-text urdu">اتحاد، ایمان، نظم</span>
+                <span class="slogan-en">Unity, Faith, Discipline</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">💚</span>
+                <span class="slogan-text urdu">دل دل پاکستان، جاں جاں پاکستان</span>
+                <span class="slogan-en">Dil Dil Pakistan!</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🌙</span>
+                <span class="slogan-text urdu">سبز ہلالی پرچم کی شان</span>
+                <span class="slogan-en">Glory of Green & White Flag</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">🛡️</span>
+                <span class="slogan-text urdu">ہم زندہ قوم ہیں، پائندہ قوم ہیں</span>
+                <span class="slogan-en">A Sovereign Resilient Nation</span>
+            </div>
+            <div class="slogan-badge gold-glass">
+                <span class="slogan-icon">⭐</span>
+                <span class="slogan-text urdu">قائد کا پاکستان، اقبال کا خواب</span>
+                <span class="slogan-en">Quaid's Nation & Iqbal's Dream</span>
+            </div>
+        </div>
+    </div>
+    <!-- National Slogans & Freedom Quotes Gold Marquee Ribbon End -->
+
+    <!-- Flagship Heritage & Verses Section Start -->
+    <section class="ceremony-section" id="ceremony">
+        <div class="ceremony-inner">
+            <span class="section-tag">National Heritage & Prayer</span>
+            <h2 class="flagship-title">🤲 Qaumi Dua & 🎵 Qaumi Tarana</h2>
+            <p class="flagship-subtitle">Celebrating the spiritual and patriotic voice of Pakistan — Allama Iqbal's Prayer & Hafeez Jalandhari's National Anthem.</p>
+            
+            <!-- Heritage Dua & Qaumi Tarana Side-by-Side Cards -->
+            <div class="heritage-poems-grid">
+                <!-- Left Card: Lab Pe Aati Hai Dua (With Featured Allama Iqbal Image) -->
+                <div class="heritage-poem-card dua-poem-card">
+                    <div class="poem-featured-header">
+                        <img src="./assests/Muhammad_Iqbal_in_1931.jpg" alt="Allama Muhammad Iqbal" class="poem-featured-img" loading="lazy" decoding="async">
+                        <div class="featured-overlay">
+                            <span class="poem-tag">Dua-e-Iqbal</span>
+                            <h3>Lab Pe Aati Hai Dua</h3>
+                            <span class="poem-author">— Allama Muhammad Iqbal</span>
+                        </div>
+                    </div>
+                    <div class="poem-body urdu-font">
+                        <p class="urdu-line">لب پہ آتی ہے دعا بن کے تمنا میری</p>
+                        <p class="urdu-line">زندگی شمع کی صورت ہو خدایا میری!</p>
+                        <p class="urdu-line">ہو میرا کام غریبوں کی حمایت کرنا</p>
+                        <p class="urdu-line">دردمندوں سے ضعیفوں سے محبت کرنا</p>
+                        <p class="urdu-line">میرے اللہ! برائی سے بچانا مجھ کو</p>
+                        <p class="urdu-line">نیک جو راہ ہو اس رہ پہ چلانا مجھ کو</p>
+                    </div>
+                    <div class="roman-translation">
+                        <small>Lab pe aati hai dua ban ke tamanna meri, Zindagi shama ki surat ho khudaya meri!</small>
+                    </div>
+                </div>
+
+                <!-- Right Card: Qaumi Tarana (With Featured Minar-e-Pakistan Image) -->
+                <div class="heritage-poem-card anthem-poem-card">
+                    <div class="poem-featured-header">
+                        <img src="./assests/image8.jpg" alt="Minar-e-Pakistan Monument" class="poem-featured-img" loading="lazy" decoding="async">
+                        <div class="featured-overlay">
+                            <span class="poem-tag">National Anthem</span>
+                            <h3>Qaumi Tarana</h3>
+                            <span class="poem-author">— Hafeez Jalandhari</span>
+                        </div>
+                    </div>
+                    <div class="poem-body urdu-font">
+                        <p class="urdu-line">پاک سرزمین شاد باد، کشورِ حسین شاد باد</p>
+                        <p class="urdu-line">تو نشانِ عزمِ عالی شان، ارضِ پاکستان!</p>
+                        <p class="urdu-line">مرکزِ یقین شاد باد</p>
+                        <p class="urdu-line">پرچمِ ستارہ و ہلال، رہبرِ ترقی و کمال</p>
+                        <p class="urdu-line">ترجمانِ ماضی، شانِ حال، جانِ استقبال!</p>
+                        <p class="urdu-line">سایۂ خدائے ذوالجلال</p>
+                    </div>
+                    <div class="roman-translation">
+                        <small>Pak sarzamin shad bad, Kishwar-e-haseen shad bad, Tu nishan-e-azm-e-aali shan!</small>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    <!-- line scrolling end -->
+    <!-- Flagship Heritage & Verses Section End -->
 
+    <!-- Interactive Landmarks Explorer Section Start -->
+    <section class="landmarks-section" id="landmarks">
+        <div class="landmarks-inner">
+            <span class="section-tag green-tag">Heritage & Culture</span>
+            <h2 class="flagship-title dark-title">🏛️ Explore Pakistan's Iconic Landmarks</h2>
+            <p class="flagship-subtitle dark-subtitle">Click on any landmark card to open the interactive historical detail modal.</p>
 
-    <!--start some indepenece day moment -->
+            <div class="landmarks-coverflow-wrapper">
+                <!-- Navigation Controls -->
+                <button type="button" class="landmarks-nav-btn landmarks-prev-btn" id="landmarks-prev-btn" aria-label="Previous Landmark">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <div class="landmarks-coverflow-viewport">
+                    <div class="landmarks-coverflow-track" id="landmarks-track">
+                        <!-- Set 1 -->
+                        <div class="landmark-card" data-landmark="minar">
+                            <img src="./assests/image8.jpg" alt="Minar-e-Pakistan" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Minar-e-Pakistan</h3>
+                                <p>Lahore • Resolution Monument</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="mazar">
+                            <img src="./assests/image1.jpg" alt="Mazar-e-Quaid" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Mazar-e-Quaid</h3>
+                                <p>Karachi • Founder's Tomb</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="badshahi">
+                            <img src="./assests/image2.jpg" alt="Badshahi Mosque" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Badshahi Mosque</h3>
+                                <p>Lahore • Mughal Heritage</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="k2">
+                            <img src="./assests/image3.jpg" alt="K2 Peak" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>K2 Mountain (8,611m)</h3>
+                                <p>Gilgit-Baltistan • 2nd Highest Peak</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="faisal">
+                            <img src="./assests/image4.jpg" alt="Faisal Mosque" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Faisal Mosque</h3>
+                                <p>Islamabad • National Mosque</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="gwadar">
+                            <img src="./assests/images14.webp" alt="Gwadar Port" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Gwadar Port</h3>
+                                <p>Balochistan • Maritime Gateway</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="hunza">
+                            <img src="./assests/images10.jpg" alt="Hunza Valley" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Hunza Valley & Fort</h3>
+                                <p>Gilgit-Baltistan • Paradise on Earth</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="babe_khyber">
+                            <img src="./assests/images12.webp" alt="Bab-e-Khyber" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Bab-e-Khyber Pass</h3>
+                                <p>Peshawar • Historic Gateway</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="rohtas">
+                            <img src="./assests/images15.webp" alt="Rohtas Fort" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Rohtas Fort</h3>
+                                <p>Jhelum • UNESCO Citadel</p>
+                            </div>
+                        </div>
+
+                        <!-- Set 2 (Middle Active Set) -->
+                        <div class="landmark-card active-center" data-landmark="minar">
+                            <img src="./assests/image8.jpg" alt="Minar-e-Pakistan" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Minar-e-Pakistan</h3>
+                                <p>Lahore • Resolution Monument</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="mazar">
+                            <img src="./assests/image1.jpg" alt="Mazar-e-Quaid" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Mazar-e-Quaid</h3>
+                                <p>Karachi • Founder's Tomb</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="badshahi">
+                            <img src="./assests/image2.jpg" alt="Badshahi Mosque" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Badshahi Mosque</h3>
+                                <p>Lahore • Mughal Heritage</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="k2">
+                            <img src="./assests/image3.jpg" alt="K2 Peak" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>K2 Mountain (8,611m)</h3>
+                                <p>Gilgit-Baltistan • 2nd Highest Peak</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="faisal">
+                            <img src="./assests/image4.jpg" alt="Faisal Mosque" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Faisal Mosque</h3>
+                                <p>Islamabad • National Mosque</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="gwadar">
+                            <img src="./assests/images14.webp" alt="Gwadar Port" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Gwadar Port</h3>
+                                <p>Balochistan • Maritime Gateway</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="hunza">
+                            <img src="./assests/images10.jpg" alt="Hunza Valley" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Hunza Valley & Fort</h3>
+                                <p>Gilgit-Baltistan • Paradise on Earth</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="babe_khyber">
+                            <img src="./assests/images12.webp" alt="Bab-e-Khyber" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Bab-e-Khyber Pass</h3>
+                                <p>Peshawar • Historic Gateway</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="rohtas">
+                            <img src="./assests/images15.webp" alt="Rohtas Fort" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Rohtas Fort</h3>
+                                <p>Jhelum • UNESCO Citadel</p>
+                            </div>
+                        </div>
+
+                        <!-- Set 3 -->
+                        <div class="landmark-card" data-landmark="minar">
+                            <img src="./assests/image8.jpg" alt="Minar-e-Pakistan" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Minar-e-Pakistan</h3>
+                                <p>Lahore • Resolution Monument</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="mazar">
+                            <img src="./assests/image1.jpg" alt="Mazar-e-Quaid" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Mazar-e-Quaid</h3>
+                                <p>Karachi • Founder's Tomb</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="badshahi">
+                            <img src="./assests/image2.jpg" alt="Badshahi Mosque" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Badshahi Mosque</h3>
+                                <p>Lahore • Mughal Heritage</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="k2">
+                            <img src="./assests/image3.jpg" alt="K2 Peak" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>K2 Mountain (8,611m)</h3>
+                                <p>Gilgit-Baltistan • 2nd Highest Peak</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="faisal">
+                            <img src="./assests/image4.jpg" alt="Faisal Mosque" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Faisal Mosque</h3>
+                                <p>Islamabad • National Mosque</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="gwadar">
+                            <img src="./assests/images14.webp" alt="Gwadar Port" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Gwadar Port</h3>
+                                <p>Balochistan • Maritime Gateway</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="hunza">
+                            <img src="./assests/images10.jpg" alt="Hunza Valley" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Hunza Valley & Fort</h3>
+                                <p>Gilgit-Baltistan • Paradise on Earth</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="babe_khyber">
+                            <img src="./assests/images12.webp" alt="Bab-e-Khyber" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Bab-e-Khyber Pass</h3>
+                                <p>Peshawar • Historic Gateway</p>
+                            </div>
+                        </div>
+                        <div class="landmark-card" data-landmark="rohtas">
+                            <img src="./assests/images15.webp" alt="Rohtas Fort" loading="lazy" decoding="async">
+                            <div class="landmark-card-overlay">
+                                <h3>Rohtas Fort</h3>
+                                <p>Jhelum • UNESCO Citadel</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="landmarks-nav-btn landmarks-next-btn" id="landmarks-next-btn" aria-label="Next Landmark">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Landmark Detail Modal -->
+    <div id="landmark-modal" class="landmark-modal">
+        <div class="landmark-modal-content">
+            <button id="modal-close" class="modal-close-btn">&times;</button>
+            <img id="modal-img" src="" alt="Landmark Detail" loading="lazy" decoding="async">
+            <div class="modal-body">
+                <span id="modal-tag" class="modal-tag"></span>
+                <h2 id="modal-title"></h2>
+                <p id="modal-desc"></p>
+            </div>
+        </div>
+    </div>
+    <!-- Interactive Landmarks Explorer Section End -->
+
+    <!--start some indepenece day moment (Moved right after Heritage & Culture Landmarks) -->
     <section>
         <div class="gallery-outside" id="Moments">
             <h2 class="gallery-heading">🇵🇰 Enjoying Moments – Yaadgar Lamhe</h2>
@@ -263,80 +797,41 @@
                         banati hain.
                     </p>
                     <div class="intro-grid">
-                        <img  src="./assests/image1.jpg" alt="Side image" loading="lazy">
-                        <img src="./assests/images15.webp" id="hideimage" alt="Gallery image" loading="lazy">
-                        <img src="./assests/images5.png" alt="Side image" loading="lazy">
-
+                        <img src="./assests/image1.jpg" alt="Side image" loading="lazy" decoding="async">
+                        <img src="./assests/images15.webp" id="hideimage" alt="Gallery image" loading="lazy" decoding="async">
+                        <img src="./assests/images5.png" alt="Side image" loading="lazy" decoding="async">
                     </div>
                 </aside>
 
-
                 <div class="masonry">
-
                     <div class="masonry-item">
-                        <img src="./assests/image8.jpg" alt="Pakistan Independence Day celebration" loading="lazy">
+                        <img src="./assests/image8.jpg" alt="Pakistan Independence Day celebration" loading="lazy" decoding="async">
                     </div>
-
-
-                    <div class="masonry-item"><img src="./assests/image4.jpg" alt="Gallery image" loading="lazy"></div>
-                    <div class="masonry-item"><img src="./assests/image7.jpg" alt="Gallery image" loading="lazy"></div>
-                    <div class="masonry-item"><img src="./assests/images9.jpg" alt="Gallery image" loading="lazy"></div>
-                    <div class="masonry-item"><img src="./assests/images10.jpg" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item"><img src="./assests/images11.jpg" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/images12.webp" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/images13.webp" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/images14.webp" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/images15.webp" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/images16.jpg" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/image17.jfif" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/images18.jpg" alt="Gallery image" loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage" ><img src="./assests/images19.webp" alt="Gallery image"
-                            loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage" ><img src="./assests/images20.jpg" alt="Gallery image"
-                            loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage" > <img src="./assests/image1.jpg" alt="Side image"
-                            loading="lazy"></div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/images20.jpg" alt="Gallery image"
-                            loading="lazy">
-                    </div>
-                    <div class="masonry-item" id="hideimage" > <img src="./assests/images5.png" alt="Side image"
-                            loading="lazy"></div>
-
-                    <div class="masonry-item" id="hideimage" > <img src="./assests/image2.jpg" alt="Side image"
-                            loading="lazy"></div>
-                    <div class="masonry-item " id="hideimage" > <img src="./assests/image3.jpg" alt="Side image"
-                            loading="lazy"> </div>
-                    <div class="masonry-item" id="hideimage" > <img src="./assests/images6.avif" alt="Side image"
-                            loading="lazy"></div>
-                    <div class="masonry-item" id="hideimage"> <img src="./assests/image8.jpg"
-                            alt="Pakistan Independence Day celebration" loading="lazy"></div>
-
-
-
-
-
-
-
-
-
-                    <div class="masonry-item" id="hideimage"><img src="./assests/Fans Restaurant GIF by D-Block Europe.gif"
-                            alt="Gallery image" loading="lazy"></div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests/flag.webp" alt="Gallery image" loading="lazy"></div>
-                    <div class="masonry-item" id="hideimage"><img src="./assests//images9.jpg" alt="Gallery image" loading="lazy">
-                    </div>
+                    <div class="masonry-item"><img src="./assests/image4.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item"><img src="./assests/image7.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item"><img src="./assests/images9.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item"><img src="./assests/images10.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item"><img src="./assests/images11.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images12.webp" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images13.webp" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images14.webp" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images15.webp" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images16.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/image17.jfif" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images18.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images19.webp" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images20.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/image1.jpg" alt="Side image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images20.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images5.png" alt="Side image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/image2.jpg" alt="Side image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/image3.jpg" alt="Side image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images6.avif" alt="Side image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/image8.jpg" alt="Pakistan Independence Day celebration" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/Fans Restaurant GIF by D-Block Europe.gif" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/flag.webp" alt="Gallery image" loading="lazy" decoding="async"></div>
+                    <div class="masonry-item" id="hideimage"><img src="./assests/images9.jpg" alt="Gallery image" loading="lazy" decoding="async"></div>
                 </div>
-
 
                 <aside class="intro-column">
                     <h3 class="intro-title">More Moments</h3>
@@ -344,46 +839,167 @@
                         Aur tasveerain jo kahani ko mukammal karti hain — dono janib se layout ab balance hai.
                     </p>
                     <div class="intro-grid">
-                        <img src="./assests/image2.jpg" alt="Side image" loading="lazy">
-                        <img src="./assests/image3.jpg" alt="Side image" loading="lazy">
-                        <img src="./assests/images13.webp" alt="Gallery image" loading="lazy">
-
+                        <img src="./assests/image2.jpg" alt="Side image" loading="lazy" decoding="async">
+                        <img src="./assests/image3.jpg" alt="Side image" loading="lazy" decoding="async">
+                        <img src="./assests/images13.webp" alt="Gallery image" loading="lazy" decoding="async">
                     </div>
                 </aside>
             </div>
         </div>
     </section>
-
     <!-- end some indepenece day moment -->
 
-    <!-- Provinces Section -->
-    <section class="provinces-section" id="provinces">
-        <div class="provinces-inner">
-            <h2 class="section-title">Pakistan ke Subay (Provinces)</h2>
-            <p class="section-subtitle">Har suba apni zubaan, saqafat aur riwayat ke saath hamari pehchan ko mazboot
-                banata hai.</p>
-            <div class="provinces-grid">
-                <div class="province-card">
-                    <h4><i class="fa-solid fa-star-and-crescent"></i> Punjab</h4>
-                    <p>Zarakhayz zameen, mehnati log aur tehzeeb o saqafat ka markaz. Lahore ko dil-e-Pakistan bhi kaha
-                        jata hai.</p>
+    <!-- APS Peshawar 16 December Martyrs Eternal Tribute Section Start (Pure White Theme) -->
+    <section class="aps-tribute-section" id="ApsTribute">
+        <div class="aps-tribute-inner">
+            <span class="aps-tag"><i class="fa-solid fa-candle-holder"></i> 16 December 2014 Eternal Memorial</span>
+            <h2 class="aps-title">APS Peshawar Martyrs — Forever In Our Hearts</h2>
+            <p class="aps-subtitle">Paying solemn national tribute to the 144+ innocent martyrs of Army Public School Peshawar. Their sacred sacrifice united Pakistan forever in courage, resilience, and patriotism.</p>
+
+            <div class="aps-tribute-card">
+                <div class="aps-candle-box">
+                    <div class="candle-flame-container">
+                        <div class="candle-flame"></div>
+                        <div class="candle-body"></div>
+                    </div>
+                    <div class="aps-stats-pill">
+                        <span class="aps-number">144+</span>
+                        <span class="aps-label">Innocent Martyrs & Teachers</span>
+                    </div>
                 </div>
-                <div class="province-card">
-                    <h4><i class="fa-solid fa-star-and-crescent"></i> Sindh</h4>
-                    <p>Shah Abdul Latif Bhittai ki dharti, Mohenjo-daro ka virsa aur Karachi — shehr-e-roshan.</p>
+
+                <div class="aps-image-frame">
+                    <img src="./assests/image8.jpg" alt="APS Peshawar Memorial Children Tribute" loading="lazy" decoding="async">
                 </div>
-                <div class="province-card">
-                    <h4><i class="fa-solid fa-star-and-crescent"></i> Khyber Pakhtunkhwa</h4>
-                    <p>Mehman-nawazi, ghairat aur pahari husn se bharpoor, Swat aur Kaghan ki wadiyan mashhoor.</p>
-                </div>
-                <div class="province-card">
-                    <h4><i class="fa-solid fa-star-and-crescent"></i> Balochistan</h4>
-                    <p>Wasee sahra, reesho ka virsa aur culturally rich log. Gwadar bandargah humari taraqqi ki raah.
+
+                <div class="aps-content-box">
+                    <blockquote class="aps-verse">
+                        "Unke guman me tha ke hami mar jayenge, Hum wo chirag hain jo hawao se jalenge!"
+                    </blockquote>
+                    <p class="aps-desc">
+                        On 16 December 2014, the brave children and heroic teachers of Army Public School Peshawar stood fearless. Their extraordinary courage ignited an unshakeable national unity. Today, 240+ Million Pakistanis salute their eternal legacy.
                     </p>
+
+                    <div class="aps-action-row">
+                        <button id="light-candle-btn" class="light-candle-btn">
+                            <i class="fa-solid fa-fire-flame-curved"></i> Light a Candle of Memory (<span id="candle-count">1,440</span> Lit)
+                        </button>
+                        <div id="candle-prayer-msg" class="candle-prayer-msg">
+                            🤲 "May Allah Almighty grant highest ranks in Jannah to our APS Peshawar Angels."
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- APS Peshawar 16 December Martyrs Eternal Tribute Section End -->
+
+    <!-- National Heroes & Defenders Gallery Marquee Ribbon Start -->
+    <section class="heroes-marquee-section" id="HeroesFolderMarquee">
+        <div class="heroes-marquee-header">
+            <span class="marquee-tag">🇵🇰 ETERNAL FREEDOM ARCHITECTS</span>
+            <h2>National Heroes & Defenders Gallery</h2>
+        </div>
+        <div class="heroes-marquee-wrapper">
+            <div class="heroes-marquee-track">
+                <!-- 21 Hero Images from assests/heroes/ -->
+                <div class="hero-marquee-card"><img src="./assests/heroes/image.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 2.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 3.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 4.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 5.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 6.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 7.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 8.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 9.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 10.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 11.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 12.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 13.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 14.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 15.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 16.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 17.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 18.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 19.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 20.png" alt="National Hero" loading="lazy" decoding="async"></div>
+
+                <!-- Duplicate Loop for Seamless Infinite Scroll -->
+                <div class="hero-marquee-card"><img src="./assests/heroes/image.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 2.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 3.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 4.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 5.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 6.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 7.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 8.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 9.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 10.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 11.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 12.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 13.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 14.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 15.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 16.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 17.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 18.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 19.png" alt="National Hero" loading="lazy" decoding="async"></div>
+                <div class="hero-marquee-card"><img src="./assests/heroes/image copy 20.png" alt="National Hero" loading="lazy" decoding="async"></div>
+            </div>
+        </div>
+    </section>
+    <!-- National Heroes & Defenders Gallery Marquee Ribbon End -->
+
+    <!-- Start Upcoming Event Section 2026 -->
+    <section>
+        <div>
+            <div class="event-div" id="Events">
+                <h1>National Events 2026</h1>
+                <div class="inside-event-div">
+
+                    <div class="event-div-first">
+                        <h5>Youm-e-Tashakur</h5>
+                        <h5>16 May 2026</h5>
+                        <div>
+                            <video class="hero" data-src="./assests/videoplayback (1).mp4" autoplay muted loop playsinline preload="none"></video>
+                        </div>
+                        <p>National observance recognizing national unity, peace, and the courage of Pakistan's armed forces.</p>
+                    </div>
+
+                    <div class="event-div-first">
+                        <h5>79th Independence Day</h5>
+                        <h5>14 August 2026</h5>
+                        <div>
+                            <video class="hero" data-src="./assests/videoplayback.mp4" autoplay muted loop playsinline preload="none"></video>
+                        </div>
+                        <p>Celebrating 79 glorious years of independence with flag hoisting, parades, and nation-wide festivities!</p>
+                    </div>
+
+                    <div class="event-div-first">
+                        <h5>Defence Day</h5>
+                        <h5>6 September 2026</h5>
+                        <div>
+                            <video class="hero" data-src="./assests/videoplayback (2).mp4" autoplay muted loop playsinline preload="none"></video>
+                        </div>
+                        <p>Honoring the valor and sacrifices of our armed forces during the 1965 war for national defense.</p>
+                    </div>
+
+                    <div class="event-div-first" id="quiad-div">
+                        <h5>Birth of Quaid-e-Azam</h5>
+                        <h5>25 December 2026</h5>
+                        <div>
+                            <video data-src="./assests/videoplayback (4).mp4" autoplay muted loop playsinline preload="none"></video>
+                        </div>
+                        <p>Remembering the vision, leadership, and legacy of Pakistan's founder, Quaid-e-Azam Muhammad Ali Jinnah.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Upcoming Event Section -->
 
     <!-- Armed Forces Section -->
     <section class="forces-section" id="Military">
@@ -392,25 +1008,21 @@
             <div class="forces-grid">
                 <div class="force-card">
                     <div class="media">
-                        <video src="./assests/videoplayback (8).mp4" autoplay muted loop playsinline preload="metadata"
-                            loading="lazy"></video>
+                        <video data-src="./assests/videoplayback (8).mp4" autoplay muted loop playsinline preload="none"></video>
                     </div>
                     <h5><i class="fa-solid fa-person-military-pointing"></i> Pakistan Army</h5>
-                    <p>Mulki hifazat, aman o aman aur qaumi islahat mein hamesha pehlu numaya. Jazba-e-iman ke saath.
-                    </p>
+                    <p>Mulki hifazat, aman o aman aur qaumi islahat mein hamesha pehlu numaya. Jazba-e-iman ke saath.</p>
                 </div>
                 <div class="force-card">
                     <div class="media">
-                        <video src="./assests/videoplayback (9).mp4" autoplay muted loop playsinline preload="metadata"
-                            loading="lazy"></video>
+                        <video data-src="./assests/videoplayback (9).mp4" autoplay muted loop playsinline preload="none"></video>
                     </div>
                     <h5><i class="fa-solid fa-anchor"></i> Pakistan Navy</h5>
                     <p>Samandari sarhadon ki hifazat, maritime security aur behtareen professional force.</p>
                 </div>
                 <div class="force-card">
                     <div class="media">
-                        <video src="./assests/videoplayback (10).mp4" autoplay muted loop playsinline preload="metadata"
-                            loading="lazy"></video>
+                        <video data-src="./assests/videoplayback (10).mp4" autoplay muted loop playsinline preload="none"></video>
                     </div>
                     <h5><i class="fa-solid fa-jet-fighter-up"></i> Pakistan Air Force</h5>
                     <p>Aasmani hifazat, modern jets aur cutting-edge technology ke saath quwat-e-difa ka aham hissa.</p>
@@ -418,23 +1030,29 @@
             </div>
         </div>
     </section>
-    <!-- anothre scrol text start  -->
-    <section>
 
+    <!-- Another Scroll Text Start -->
+    <section>
         <div class="scroll-text">
             <h1>🇵🇰 Long Live Pakistan — United We Stand, Proud We Shine! 🇵🇰</h1>
         </div>
     </section>
-    <!-- another scroll text end -->
+    <!-- Another Scroll Text End -->
+
+    <!-- Floating Back to Top Button -->
+    <button id="back-to-top" class="back-to-top-btn" title="Back to Top">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-brand">
                 <div class="brand-row">
-                    <img src="./assests/flag.png" alt="Pakistan Flag" loading="lazy">
-                    <h3>Independence Day</h3>
+                    <img src="./assests/flag.png" alt="Pakistan Flag" loading="lazy" decoding="async">
+                    <h3>79th Independence Day</h3>
                 </div>
-                <p>United in faith, discipline and unity — celebrating Pakistan's spirit and heritage.</p>
+                <p>United in faith, discipline and unity — celebrating Pakistan's spirit and heritage (1947 – 2026).</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" aria-label="X" title="X"><i class="fa-brands fa-x-twitter"></i></a>
@@ -446,10 +1064,9 @@
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#historyheading">History</a></li>
-                    <li><a href="#">Our Leaders</a></li>
-                    <li><a href="#">Short Overview</a></li>
-                    <li><a href="#">Martians</a></li>
+                    <li><a href="#ceremony">Flag Hoisting</a></li>
+                    <li><a href="#landmarks">Landmarks</a></li>
+                    <li><a href="#Military">Military</a></li>
                 </ul>
             </div>
             <div class="footer-contact">
@@ -461,10 +1078,24 @@
                 </form>
             </div>
         </div>
-        <div class="footer-bottom">© 2025 Usama — All Rights Reserved | Pakistan Zindabad
-</div>
+        <div class="footer-bottom">© 2026 Usama — Dedicated to the Spirit of Pakistan | Flagship 79th Independence Tribute</div>
     </footer>
- 
+
+    <!-- Footer Grand Patriotic Celebration White Full-Screen Overlay -->
+    <div id="footer-celebration-modal" class="footer-celebration-overlay" style="display: none;">
+        <button class="celebration-close-btn" id="close-celebration-btn" aria-label="Close Overlay">&times;</button>
+        <div class="footer-celebration-content">
+            <div class="flag-anim-wrapper">
+                <img src="./assests/flag.png" alt="Pakistan Flag" class="celebration-flag-img" loading="eager" decoding="async">
+            </div>
+            <h1 class="celebration-title">PAKISTAN ZINDABAD!</h1>
+            <h2 class="celebration-subtitle">PAKISTAN ZINDABAD!</h2>
+            <p class="celebration-tagline">🇵🇰 79th Independence Day Tribute — Long Live The Islamic Republic of Pakistan! 🇵🇰</p>
+        </div>
+        <div class="celebration-timer-bar"><div id="celebration-progress"></div></div>
+    </div>
 </body>
 
-</html> 
+</html>
+
+ 
